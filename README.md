@@ -3,7 +3,7 @@
 A new Flutter project.
 
 ## Ideas for Improvment.
-    1. Alert Dialogs || Snackbars.
+    1. Alert Dialogs || Snackbars (Where needed).
     2. Adding a Json file with a List of Cities/Countries? (User can Pick from)
     3. Checking if a user has internet connection before going out to fetch data.
     4. Navigating user to App Settings on Mobile if location Permissions is set to denied_forever.(Check todo)
