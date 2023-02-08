@@ -1,4 +1,20 @@
+import 'package:flutter/material.dart';
+
+import '../screens/location_screen.dart';
+import '../utilities/constants.dart';
+import 'location.dart';
+import 'networking.dart';
+
 class WeatherModel {
+  static Future getLocationWeather() async {
+    var position = await Location.getCurrentLocation();
+    if (position == null) return {};
+
+    var uri = Uri.parse(
+        "$kOpenWeatherMapUrl?lat=${position.latitude}&lon=${position.longitude}&appid=$kApiKey&units=metric");
+    return await NetworkHelper.getData(uri, position);
+  }
+
   static String getWeatherIcon(int condition) {
     if (condition < 300) {
       return '🌩';

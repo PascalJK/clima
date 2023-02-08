@@ -1,7 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 
 class Location {
-  Future<Position?> getCurrentLocation() async {
+  static Future<Position?> getCurrentLocation() async {
     try {
       if (!await Geolocator.isLocationServiceEnabled()) {
         throw 'Location services are disabled.';

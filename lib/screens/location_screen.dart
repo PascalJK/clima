@@ -1,3 +1,4 @@
+import 'package:clima/screens/city_screen.dart';
 import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
@@ -17,19 +18,30 @@ class _LocationScreenState extends State<LocationScreen> {
   String weatherIcon = "";
   String weatherMessage = "";
 
-  void updateUI() {
+  void updateUI(Map weatherData) {
+    if (weatherData.isEmpty) {
+      setState(() {
+        weatherMessage = "Failed to get updated weather info";
+      });
+      return;
+    }
     setState(() {
-      temperature = widget.locationData["main"]["temp"];
-      city = widget.locationData["name"];
+      temperature = double.parse(weatherData["main"]["temp"].toString());
+      city = weatherData["name"];
       weatherIcon =
-          WeatherModel.getWeatherIcon(widget.locationData["weather"][0]["id"]);
+          WeatherModel.getWeatherIcon(weatherData["weather"][0]["id"]);
       weatherMessage = WeatherModel.getMessage(temperature);
     });
   }
 
   @override
+  void initState() {
+    super.initState();
+    updateUI(widget.locationData);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    updateUI();
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -52,7 +64,9 @@ class _LocationScreenState extends State<LocationScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        updateUI(await WeatherModel.getLocationWeather());
+                      },
                       child: const Icon(
                         Icons.near_me,
                         size: kIconSize,
