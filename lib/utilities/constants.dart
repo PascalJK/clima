@@ -4,7 +4,7 @@ const String kApiKey = "ae030e51389c33763c74f32490a0fa98";
 
 const kTempTextStyle = TextStyle(
   fontFamily: 'Spartan MB',
-  fontSize: 100.0,
+  fontSize: 80.0,
 );
 
 const kMessageTextStyle = TextStyle(

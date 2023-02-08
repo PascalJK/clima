@@ -20,12 +20,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     if (position == null) return;
 
     var uri = Uri.parse(
-        "https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$kApiKey");
+        "https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$kApiKey&units=metric");
     var data = await NetworkHelper.getData(uri, position);
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => LocationScreen(),
+        builder: (context) => LocationScreen(locationData: data),
       ),
     );
   }
@@ -38,6 +37,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    getLocationData();
     return const Scaffold(
       body: Center(
         child: SpinKitDualRing(
