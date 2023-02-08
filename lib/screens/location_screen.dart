@@ -73,7 +73,13 @@ class _LocationScreenState extends State<LocationScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CityScreen(),
+                            ));
+                      },
                       child: const Icon(
                         Icons.location_city,
                         size: kIconSize,

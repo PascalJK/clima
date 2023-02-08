@@ -9,6 +9,8 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  String cityName = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,30 +23,41 @@ class _CityScreenState extends State<CityScreen> {
         ),
         constraints: const BoxConstraints.expand(),
         child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    size: kIconSize,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      size: kIconSize,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(20.0),
-                child: null,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'Get Weather',
-                  style: kButtonTextStyle,
+                Container(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: TextField(
+                    style: const TextStyle(color: Colors.black),
+                    decoration: getTextFieldDecoration(),
+                    onChanged: (value) {
+                      cityName = value;
+                    },
+                  ),
                 ),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Get Weather',
+                    style: kButtonTextStyle,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

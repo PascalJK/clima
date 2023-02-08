@@ -33,3 +33,37 @@ const kConditionTextStyle = TextStyle(
 );
 
 const double kIconSize = 50.0;
+
+// Can use (Colors.white.withOpacity(.7)) on [fillColor] here.
+InputDecoration getTextFieldDecoration() => InputDecoration(
+      filled: true,
+      fillColor: Colors.white.withOpacity(.7),
+      //Temp
+      icon: const Icon(
+        Icons.location_city,
+        color: Colors.white,
+      ),
+      hintText: "Enter City Name",
+      hintStyle: const TextStyle(color: Colors.grey),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderSide: BorderSide.none,
+      ),
+    );
+
+// Can't use (Colors.white.withOpacity(.7)) on [fillColor] here.
+const k = InputDecoration(
+  filled: true,
+  fillColor: Colors.white,
+  //Temp
+  icon: Icon(
+    Icons.location_city,
+    color: Colors.white,
+  ),
+  hintText: "Enter City Name",
+  hintStyle: TextStyle(color: Colors.grey),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderSide: BorderSide.none,
+  ),
+);
