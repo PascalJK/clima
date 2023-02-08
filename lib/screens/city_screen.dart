@@ -34,7 +34,7 @@ class _CityScreenState extends State<CityScreen> {
                       Navigator.pop(context);
                     },
                     child: const Icon(
-                      Icons.arrow_back_ios,
+                      Icons.close,
                       size: kIconSize,
                     ),
                   ),
@@ -50,7 +50,13 @@ class _CityScreenState extends State<CityScreen> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (cityName.isEmpty) {
+                      print("empty");
+                      return;
+                    }
+                    Navigator.pop(context, cityName.trim());
+                  },
                   child: const Text(
                     'Get Weather',
                     style: kButtonTextStyle,

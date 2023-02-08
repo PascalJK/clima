@@ -73,12 +73,17 @@ class _LocationScreenState extends State<LocationScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CityScreen(),
-                            ));
+                      onTap: () async {
+                        var typedName = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CityScreen(),
+                          ),
+                        );
+                        if (typedName != null) {
+                          updateUI(
+                              await WeatherModel.getCityWeather(typedName));
+                        }
                       },
                       child: const Icon(
                         Icons.location_city,

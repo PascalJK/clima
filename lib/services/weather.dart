@@ -1,18 +1,20 @@
-import 'package:flutter/material.dart';
-
-import '../screens/location_screen.dart';
 import '../utilities/constants.dart';
 import 'location.dart';
 import 'networking.dart';
 
 class WeatherModel {
+  static Future getCityWeather(String cityName) async {
+    return await NetworkHelper.getData(Uri.parse(
+        "$kOpenWeatherMapUrl?q=$cityName&appid=$kApiKey&units=metric"));
+  }
+
   static Future getLocationWeather() async {
     var position = await Location.getCurrentLocation();
     if (position == null) return {};
 
     var uri = Uri.parse(
         "$kOpenWeatherMapUrl?lat=${position.latitude}&lon=${position.longitude}&appid=$kApiKey&units=metric");
-    return await NetworkHelper.getData(uri, position);
+    return await NetworkHelper.getData(uri);
   }
 
   static String getWeatherIcon(int condition) {
