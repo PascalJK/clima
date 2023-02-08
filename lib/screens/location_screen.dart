@@ -1,3 +1,4 @@
+import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
 
@@ -12,13 +13,18 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   double temperature = 0;
-  String cityName = "";
-  int condition = 0;
+  String city = "";
+  String weatherIcon = "";
+  String weatherMessage = "";
 
   void updateUI() {
-    temperature = widget.locationData["main"]["temp"];
-    cityName = widget.locationData["name"];
-    condition = widget.locationData["weather"][0]["id"];
+    setState(() {
+      temperature = widget.locationData["main"]["temp"];
+      city = widget.locationData["name"];
+      weatherIcon =
+          WeatherModel.getWeatherIcon(widget.locationData["weather"][0]["id"]);
+      weatherMessage = WeatherModel.getMessage(temperature);
+    });
   }
 
   @override
@@ -31,58 +37,66 @@ class _LocationScreenState extends State<LocationScreen> {
             image: const AssetImage(kLocationBackground),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8), BlendMode.dstATop),
+                Colors.white.withOpacity(.9), BlendMode.dstATop),
           ),
         ),
         constraints: const BoxConstraints.expand(),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.near_me,
-                      size: kIconSize,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.location_city,
-                      size: kIconSize,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Row(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 15, right: 10, left: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${temperature.toStringAsFixed(1)}°",
-                      style: kTempTextStyle,
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.near_me,
+                        size: kIconSize,
+                      ),
                     ),
-                    const Text(
-                      '☀️',
-                      style: kConditionTextStyle,
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.location_city,
+                        size: kIconSize,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: Text(
-                  "It's 🍦 time in $cityName!",
-                  textAlign: TextAlign.right,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "${temperature.toStringAsFixed(1)}°",
+                            style: kTempTextStyle,
+                          ),
+                          Text(
+                            weatherIcon,
+                            style: kConditionTextStyle,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "City: $city",
+                        style: kCityTextStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  weatherMessage,
                   style: kMessageTextStyle,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
